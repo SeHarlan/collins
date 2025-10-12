@@ -12,7 +12,7 @@ import {
   onboardingQuestionIndexAtom,
   onboardingDataAtom,
   onboardingCompletedAtom,
-  onboardingStartedAtom,
+  onboardingIdAtom,
 } from '@/lib/state/atoms/onboarding.atom';
 import { ONBOARDING_QUESTIONS } from '@/lib/onboarding/questions';
 import { CLIENT_PATHWAYS } from '@/constants/clientPathways';
@@ -29,30 +29,26 @@ export default function OnboardingPage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useAtom(
     onboardingQuestionIndexAtom,
   );
-  const [started, setStarted] = useAtom(onboardingStartedAtom);
+  
+  const [onboardingId, setOnboardingId] = useAtom(onboardingIdAtom);
   const [completed, setCompleted] = useAtom(onboardingCompletedAtom);
   const setOnboardingData = useSetAtom(onboardingDataAtom);
   const [direction, setDirection] = useState(1);
 
   // Derive state from currentQuestionIndex
-  const currentStep: OnboardingStep = !started
+  const currentStep: OnboardingStep = !onboardingId
     ? 'welcome'
     : currentQuestionIndex >= ONBOARDING_QUESTIONS.length
       ? 'completion'
       : 'questions';
 
-  useEffect(() => {
-    // Redirect to dashboard if onboarding is completed
-    if (completed) {
-      setCompleted(false);
-      // router.push(CLIENT_PATHWAYS.DASHBOARD);
+  const handleStart = () => {
+    if (!user?.privyId) {
       return;
     }
-  }, [completed, router]);
 
-  const handleStart = () => {
     setCurrentQuestionIndex(0);
-    setStarted(true);
+    setOnboardingId(user.privyId);
     setDirection(1);
   };
 
@@ -71,10 +67,28 @@ export default function OnboardingPage() {
   const reset = () => {
     setDirection(-1);
     setCurrentQuestionIndex(0);
-    setStarted(false);
+    setOnboardingId('');
     setCompleted(false);
     setOnboardingData({});
   };
+
+  useEffect(() => {
+    if (!user?.privyId || !onboardingId) return;
+
+    // If user has changed reset the onboarding process
+    if (onboardingId !== user.privyId) {
+      reset();
+    }
+  }, [user?.privyId, onboardingId]);
+
+  useEffect(() => {
+    // Redirect to dashboard if onboarding is completed
+    if (completed) {
+      router.push(CLIENT_PATHWAYS.DASHBOARD);
+      return;
+    }
+  }, [completed, router]);
+
 
   if (!authReady || !user) {
     return (

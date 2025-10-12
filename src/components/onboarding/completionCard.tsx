@@ -19,9 +19,7 @@ import { ONBOARDING_QUESTIONS } from '@/lib/onboarding/questions';
 import { ProgressBar } from './progressBar';
 import { ArrowLeftIcon } from 'lucide-react';
 import { useCreateAssessment } from '@/lib/api/hooks/useAssessments';
-import { AssessmentData } from '@/lib/db/schemas/assessment.schema';
 import { toast } from 'sonner';
-import { ScrollArea } from '../ui/scroll-area';
 
 interface CompletionCardProps {
   onPrevious: () => void;

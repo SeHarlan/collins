@@ -22,6 +22,7 @@ import { ProgressBar } from './progressBar';
 import { SelectButton } from './selectButton';
 import { SelectSlider } from './selectSlider';
 import { useRef } from 'react';
+import { ScrollArea } from '../ui/scroll-area';
 
 interface QuestionCardProps {
   onNext: () => void;
@@ -72,84 +73,91 @@ export function QuestionCard({ onNext, onPrevious }: QuestionCardProps) {
   };
 
   return (
-    <Card className="relative flex h-full w-full flex-col justify-between gap-6 overflow-hidden">
+    <Card className="relative grid h-full max-h-[calc(100dvh-2rem)] w-full flex-1 grid-rows-[auto_minmax(0,1fr)_auto] overflow-hidden">
       <ProgressBar
         current={currentQuestionIndex + 1}
         total={ONBOARDING_QUESTIONS.length}
         completed={completed}
-        className="p-6"
+        className="row-start-1 w-full p-6 pb-0"
       />
 
-      <motion.div
-        layout
-        key={currentQuestion.id}
-        initial={{ opacity: 0, y: 5 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          type: 'spring',
-          duration: 1,
-          bounce: 0.5,
-        }}
-      >
-        <CardHeader className="space-y-4 py-0 text-center">
-          <p className="hidden text-[5rem] leading-none md:block">
-            {currentQuestion.icon}
-          </p>
+      <div className="relative row-start-2 min-h-0 py-3">
+         <ScrollArea className="h-full [&_[data-slot=scroll-area-viewport]>div:first-child]:h-full">
+          <div className="flex h-full flex-col justify-center space-y-6 px-6 py-3">
+            <motion.div
+              layout
+              key={currentQuestion.id}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                type: 'spring',
+                duration: 1,
+                bounce: 0.5,
+              }}
+            >
+              <CardHeader className="space-y-4 p-0 text-center">
+                <p className="hidden text-[5rem] leading-none md:block">
+                  {currentQuestion.icon}
+                </p>
 
-          <CardTitle className="text-2xl md:text-3xl">
-            {currentQuestion.title}
-          </CardTitle>
-          <CardDescription className="text-muted-foreground text-sm md:text-lg">
-            {currentQuestion.subtitle}
-          </CardDescription>
-        </CardHeader>
-      </motion.div>
+                <CardTitle className="text-2xl md:text-3xl">
+                  {currentQuestion.title}
+                </CardTitle>
+                <CardDescription className="text-muted-foreground text-sm md:text-lg">
+                  {currentQuestion.subtitle}
+                </CardDescription>
+              </CardHeader>
+            </motion.div>
 
-      <CardContent className="py-2">
-        {currentQuestion.type === 'buttons' && (
-          <div className="grid gap-3">
-            {currentQuestion.options.map((option, index) => (
-              <motion.div
-                key={option.value}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  type: 'spring',
-                  duration: 0.8,
-                  bounce: 0.5,
-                  delay: index * 0.1,
-                }}
-                whileHover={{
-                  scale: 1.02,
-                  // Will be used when gesture starts
-                  transition: {
-                    duration: 0.9,
-                    type: 'spring',
-                    bounce: 0.66,
-                  },
-                }}
-                className="w-full"
-              >
-                <SelectButton
-                  option={option}
+            <CardContent className="p-0">
+              {currentQuestion.type === 'buttons' && (
+                <div className="grid gap-3">
+                  {currentQuestion.options.map((option, index) => (
+                    <motion.div
+                      key={option.value}
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        type: 'spring',
+                        duration: 0.8,
+                        bounce: 0.5,
+                        delay: index * 0.1,
+                      }}
+                      whileHover={{
+                        scale: 1.02,
+                        // Will be used when gesture starts
+                        transition: {
+                          duration: 0.9,
+                          type: 'spring',
+                          bounce: 0.66,
+                        },
+                      }}
+                      className="w-full"
+                    >
+                      <SelectButton
+                        option={option}
+                        currentValue={currentValue}
+                        handleSelect={handleSelect}
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+              {currentQuestion.type === 'slider' && (
+                <SelectSlider
                   currentValue={currentValue}
-                  handleSelect={handleSelect}
+                  handleSliderChange={handleSliderChange}
+                  currentQuestion={currentQuestion}
+                  onCurrentQuestion={onCurrentQuestion}
+                  onNext={onNext}
                 />
-              </motion.div>
-            ))}
+              )}
+            </CardContent>
           </div>
-        )}
-        {currentQuestion.type === 'slider' && (
-          <SelectSlider
-            currentValue={currentValue}
-            handleSliderChange={handleSliderChange}
-            currentQuestion={currentQuestion}
-            onCurrentQuestion={onCurrentQuestion}
-            onNext={onNext}
-          />
-        )}
-      </CardContent>
-      <div className="flex justify-between gap-4 p-6">
+        </ScrollArea>
+      </div>
+
+      <div className="row-start-3 flex w-full justify-between gap-4 p-6 pt-0">
         <ButtonHoverWrapper disabled={isFirst}>
           <Button
             type="button"

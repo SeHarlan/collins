@@ -12,8 +12,9 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!user) return;
+    
     // TODO: if !user.portfolios.length {
-    router.push(CLIENT_PATHWAYS.ONBOARDING);
+    // router.push(CLIENT_PATHWAYS.ONBOARDING);
     // }
   }, [authReady, user]);
 

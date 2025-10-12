@@ -20,7 +20,7 @@ export function PrivyProvider({ children }: { children: React.ReactNode }) {
       clientId={NEXT_PUBLIC_PRIVY_CLIENT_ID}
       config={{
         appearance: {
-          walletList: ['detected_solana_wallets', 'metamask'],
+          walletList: ['phantom', 'metamask', 'detected_solana_wallets', 'detected_ethereum_wallets'],
         },
         externalWallets: { solana: { connectors: toSolanaWalletConnectors() } },
         solana: {

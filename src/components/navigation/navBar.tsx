@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { LoginButton } from '../general/loginButton';
 import { MenuIcon, XIcon } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button, ButtonHoverWrapper } from '../ui/button';
 import { FundWalletButton } from '../general/fundWalletButton';
 import { AnimatedMenuIcon, AnimatedXIcon } from '../icons/animated';
 import { AnimatePresence, motion } from 'motion/react';
@@ -11,17 +11,18 @@ export const NavBar = () => {
 
   return (
     <>
-      <Button
-        onClick={() => setNavbarOpen((prev) => !prev)}
-        className="fixed top-6 right-6 z-50"
-        size="icon"
-      >
-        {navbarOpen ? (
-          <AnimatedXIcon className="stroke-3" />
-        ) : (
-          <AnimatedMenuIcon className="stroke-3" />
-        )}
-      </Button>
+      <ButtonHoverWrapper className='fixed top-6 right-6 z-50'>
+        <Button
+          onClick={() => setNavbarOpen((prev) => !prev)}
+          size="icon"
+        >
+          {navbarOpen ? (
+            <AnimatedXIcon className="stroke-3" />
+          ) : (
+            <AnimatedMenuIcon className="stroke-3" />
+          )}
+        </Button>
+      </ButtonHoverWrapper>
       <AnimatePresence initial={false}>
         {navbarOpen && (
           <motion.div
