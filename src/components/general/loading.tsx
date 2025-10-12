@@ -1,12 +1,12 @@
-import { Loader2Icon } from "lucide-react";
+import { Loader2Icon } from 'lucide-react';
 
 export const LoadingDisplay = () => {
   return (
     <div className="space-y-4">
-      <p className="text-center text-muted-foreground font-serif">
+      <p className="text-muted-foreground text-center font-serif">
         Collins is sipping a pina colada...
       </p>
-      <Loader2Icon className="mx-auto text-primary size-12 animate-spin" />
+      <Loader2Icon className="text-primary mx-auto size-12 animate-spin" />
     </div>
   );
-}
+};

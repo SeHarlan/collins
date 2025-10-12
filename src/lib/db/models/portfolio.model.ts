@@ -1,10 +1,29 @@
-import { ASSET_MODEL, PORTFOLIO_ASSETS_PATH, PORTFOLIO_MODEL, PORTFOLIO_USER_REFERENCE, USER_MODEL } from '@/constants/models';
-import { Schema, model, models, Model, Document, Types, PopulateOptions } from 'mongoose';
-import { PortfolioData, PortfolioAssetData } from '@/lib/db/schemas/portfolio.schema';
+import {
+  ASSET_MODEL,
+  PORTFOLIO_ASSETS_PATH,
+  PORTFOLIO_MODEL,
+  PORTFOLIO_USER_REFERENCE,
+  USER_MODEL,
+} from '@/constants/models';
+import {
+  Schema,
+  model,
+  models,
+  Model,
+  Document,
+  Types,
+  PopulateOptions,
+} from 'mongoose';
+import {
+  PortfolioData,
+  PortfolioAssetData,
+} from '@/lib/db/schemas/portfolio.schema';
 import { AssetData } from '@/lib/db/schemas/asset.schema';
 
 // MongoDB document interface
-export interface PortfolioDocument extends Omit<PortfolioData, 'userId' | 'assets'>, Document {
+export interface PortfolioDocument
+  extends Omit<PortfolioData, 'userId' | 'assets'>,
+    Document {
   userId: Types.ObjectId;
   assets: Array<{
     assetId: Types.ObjectId;
@@ -30,17 +49,19 @@ const portfolioSchema = new Schema<PortfolioDocument>(
       required: true,
       index: true,
     },
-    assets: [{
-      assetId: {
-        type: Schema.Types.ObjectId,
-        ref: ASSET_MODEL,
-        required: true,
+    assets: [
+      {
+        assetId: {
+          type: Schema.Types.ObjectId,
+          ref: ASSET_MODEL,
+          required: true,
+        },
+        amount: {
+          type: String,
+          required: true,
+        },
       },
-      amount: {
-        type: String,
-        required: true,
-      },
-    }],
+    ],
   },
   {
     timestamps: true,
@@ -56,7 +77,9 @@ portfolioSchema.virtual(PORTFOLIO_ASSETS_PATH, {
   foreignField: '_id',
 });
 
-export const Portfolio: Model<PortfolioDocument> = models[PORTFOLIO_MODEL] || model<PortfolioDocument>(PORTFOLIO_MODEL, portfolioSchema);
+export const Portfolio: Model<PortfolioDocument> =
+  models[PORTFOLIO_MODEL] ||
+  model<PortfolioDocument>(PORTFOLIO_MODEL, portfolioSchema);
 
 // Population for assets within the assets array
 export const PortfolioAssetsNestedPopulation: PopulateOptions = {
@@ -65,10 +88,11 @@ export const PortfolioAssetsNestedPopulation: PopulateOptions = {
   justOne: true,
 };
 
-
 // Type for portfolio with nested populated assets in the assets array
 export type PortfolioWithVirtuals = PortfolioData & {
-  [PORTFOLIO_ASSETS_PATH]: Array<PortfolioAssetData & {
-    asset: AssetData;
-  }>;
+  [PORTFOLIO_ASSETS_PATH]: Array<
+    PortfolioAssetData & {
+      asset: AssetData;
+    }
+  >;
 };

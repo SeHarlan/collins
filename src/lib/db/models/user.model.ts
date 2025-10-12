@@ -1,11 +1,28 @@
-import { ASSESSMENT_MODEL, ASSESSMENT_USER_REFERENCE, USER_ASSESSMENT_PATH, USER_MODEL, USER_PORTFOLIO_PATH, PORTFOLIO_MODEL, PORTFOLIO_USER_REFERENCE, PORTFOLIO_ASSETS_PATH, ASSET_MODEL } from '@/constants/models';
-import { Schema, model, models, Model, Document, PopulateOptions } from 'mongoose';
+import {
+  ASSESSMENT_MODEL,
+  ASSESSMENT_USER_REFERENCE,
+  USER_ASSESSMENT_PATH,
+  USER_MODEL,
+  USER_PORTFOLIO_PATH,
+  PORTFOLIO_MODEL,
+  PORTFOLIO_USER_REFERENCE,
+  PORTFOLIO_ASSETS_PATH,
+  ASSET_MODEL,
+} from '@/constants/models';
+import {
+  Schema,
+  model,
+  models,
+  Model,
+  Document,
+  PopulateOptions,
+} from 'mongoose';
 import { UserData } from '@/lib/db/schemas/user.schema';
 import { AssessmentData } from '@/lib/db/schemas/assessment.schema';
 import { PortfolioWithVirtuals } from './portfolio.model';
 
 // MongoDB document interface
-export interface UserDocument extends UserData, Document { }
+export interface UserDocument extends UserData, Document {}
 
 // Mongoose schema
 const userSchema = new Schema<UserDocument>(
@@ -43,7 +60,8 @@ userSchema.virtual(USER_PORTFOLIO_PATH, {
   foreignField: PORTFOLIO_USER_REFERENCE,
 });
 
-export const User: Model<UserDocument> = models[USER_MODEL] || model<UserDocument>(USER_MODEL, userSchema);
+export const User: Model<UserDocument> =
+  models[USER_MODEL] || model<UserDocument>(USER_MODEL, userSchema);
 
 export const UserAssessmentPopulation: PopulateOptions = {
   path: USER_ASSESSMENT_PATH,
@@ -69,4 +87,3 @@ export type UserWithAllVirtuals = UserData & {
   [USER_ASSESSMENT_PATH]: AssessmentData;
   [USER_PORTFOLIO_PATH]: PortfolioWithVirtuals[];
 };
-

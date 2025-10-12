@@ -1,5 +1,11 @@
 import { Types } from 'mongoose';
-import { Portfolio, PortfolioDocument, PortfolioData, PortfolioWithNestedAssets, PortfolioAssetsNestedPopulation } from '../models/portfolio.model';
+import {
+  Portfolio,
+  PortfolioDocument,
+  PortfolioData,
+  PortfolioWithNestedAssets,
+  PortfolioAssetsNestedPopulation,
+} from '../models/portfolio.model';
 import { connectDB } from '../connection';
 
 export class PortfolioRepository {
@@ -26,12 +32,16 @@ export class PortfolioRepository {
   /**
    * Find a portfolio by ID with nested populated assets
    */
-  static async findByIdWithNestedAssets(id: string): Promise<PortfolioWithNestedAssets | null> {
+  static async findByIdWithNestedAssets(
+    id: string,
+  ): Promise<PortfolioWithNestedAssets | null> {
     await connectDB();
     if (!Types.ObjectId.isValid(id)) {
       return null;
     }
-    return Portfolio.findById(id).populate(PortfolioAssetsNestedPopulation).exec() as unknown as Promise<PortfolioWithNestedAssets | null>;
+    return Portfolio.findById(id)
+      .populate(PortfolioAssetsNestedPopulation)
+      .exec() as unknown as Promise<PortfolioWithNestedAssets | null>;
   }
 
   /**
@@ -48,12 +58,16 @@ export class PortfolioRepository {
   /**
    * Find portfolios by user ID with nested populated assets
    */
-  static async findByUserIdWithAssets(userId: string): Promise<PortfolioWithNestedAssets[]> {
+  static async findByUserIdWithAssets(
+    userId: string,
+  ): Promise<PortfolioWithNestedAssets[]> {
     await connectDB();
     if (!Types.ObjectId.isValid(userId)) {
       return [];
     }
-    return Portfolio.find({ userId }).populate(PortfolioAssetsNestedPopulation).exec() as unknown as Promise<PortfolioWithNestedAssets[]>;
+    return Portfolio.find({ userId })
+      .populate(PortfolioAssetsNestedPopulation)
+      .exec() as unknown as Promise<PortfolioWithNestedAssets[]>;
   }
 
   /**
@@ -67,9 +81,13 @@ export class PortfolioRepository {
   /**
    * Find portfolios by risk level with assets
    */
-  static async findByRiskWithAssets(risk: number): Promise<PortfolioWithNestedAssets[]> {
+  static async findByRiskWithAssets(
+    risk: number,
+  ): Promise<PortfolioWithNestedAssets[]> {
     await connectDB();
-    return Portfolio.find({ risk }).populate(PortfolioAssetsNestedPopulation).exec() as unknown as Promise<PortfolioWithNestedAssets[]>;
+    return Portfolio.find({ risk })
+      .populate(PortfolioAssetsNestedPopulation)
+      .exec() as unknown as Promise<PortfolioWithNestedAssets[]>;
   }
 
   /**
@@ -85,7 +103,9 @@ export class PortfolioRepository {
    */
   static async findAllWithAssets(): Promise<PortfolioWithNestedAssets[]> {
     await connectDB();
-    return Portfolio.find().populate(PortfolioAssetsNestedPopulation).exec() as unknown as Promise<PortfolioWithNestedAssets[]>;
+    return Portfolio.find()
+      .populate(PortfolioAssetsNestedPopulation)
+      .exec() as unknown as Promise<PortfolioWithNestedAssets[]>;
   }
 
   /**
@@ -130,30 +150,36 @@ export class PortfolioRepository {
     amount: string,
   ): Promise<PortfolioDocument | null> {
     await connectDB();
-    if (!Types.ObjectId.isValid(portfolioId) || !Types.ObjectId.isValid(assetId)) {
+    if (
+      !Types.ObjectId.isValid(portfolioId) ||
+      !Types.ObjectId.isValid(assetId)
+    ) {
       return null;
     }
-    return Portfolio.findOneAndUpdate(
-      { 
-        _id: portfolioId,
-        'assets.assetId': assetId 
-      },
-      { 
-        $set: { 'assets.$.amount': amount } 
-      },
-      { new: true }
-    ).exec() || Portfolio.findByIdAndUpdate(
-      portfolioId,
-      { 
-        $push: { 
-          assets: { 
-            assetId: new Types.ObjectId(assetId), 
-            amount 
-          } 
-        } 
-      },
-      { new: true }
-    ).exec();
+    return (
+      Portfolio.findOneAndUpdate(
+        {
+          _id: portfolioId,
+          'assets.assetId': assetId,
+        },
+        {
+          $set: { 'assets.$.amount': amount },
+        },
+        { new: true },
+      ).exec() ||
+      Portfolio.findByIdAndUpdate(
+        portfolioId,
+        {
+          $push: {
+            assets: {
+              assetId: new Types.ObjectId(assetId),
+              amount,
+            },
+          },
+        },
+        { new: true },
+      ).exec()
+    );
   }
 
   /**
@@ -164,13 +190,16 @@ export class PortfolioRepository {
     assetId: string,
   ): Promise<PortfolioDocument | null> {
     await connectDB();
-    if (!Types.ObjectId.isValid(portfolioId) || !Types.ObjectId.isValid(assetId)) {
+    if (
+      !Types.ObjectId.isValid(portfolioId) ||
+      !Types.ObjectId.isValid(assetId)
+    ) {
       return null;
     }
     return Portfolio.findByIdAndUpdate(
       portfolioId,
       { $pull: { assets: { assetId } } },
-      { new: true }
+      { new: true },
     ).exec();
   }
 
@@ -182,17 +211,20 @@ export class PortfolioRepository {
     assetId: string,
   ): Promise<string | null> {
     await connectDB();
-    if (!Types.ObjectId.isValid(portfolioId) || !Types.ObjectId.isValid(assetId)) {
+    if (
+      !Types.ObjectId.isValid(portfolioId) ||
+      !Types.ObjectId.isValid(assetId)
+    ) {
       return null;
     }
     const portfolio = await Portfolio.findOne(
-      { 
+      {
         _id: portfolioId,
-        'assets.assetId': assetId 
+        'assets.assetId': assetId,
       },
-      { 'assets.$': 1 }
+      { 'assets.$': 1 },
     ).exec();
-    
+
     return portfolio?.assets[0]?.amount || null;
   }
 

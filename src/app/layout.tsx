@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
-import { Cactus_Classical_Serif, Chocolate_Classical_Sans } from 'next/font/google';
+import {
+  Cactus_Classical_Serif,
+  Chocolate_Classical_Sans,
+} from 'next/font/google';
 import { PrivyProvider } from '@/components/providers/privyProvider';
 import { QueryProvider } from '@/components/providers/queryProvider';
 import { AtomProvider } from '@/components/providers/atomProvider';
@@ -11,12 +14,12 @@ import './globals.css';
 const cactusClassicalSerif = Cactus_Classical_Serif({
   variable: '--font-cactus-serif',
   subsets: ['latin'],
-  weight: ['400']
+  weight: ['400'],
 });
 const chocolateClassicalSans = Chocolate_Classical_Sans({
   variable: '--font-chocolate-sans',
   subsets: ['latin'],
-  weight: ['400']
+  weight: ['400'],
 });
 
 export const metadata: Metadata = {

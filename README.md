@@ -17,7 +17,7 @@ A minimal, production-ready non-custodial crypto portfolio tracker built with Ne
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS + shadcn/ui
-- **State Management**: 
+- **State Management**:
   - Client state: Jotai
   - Server state: TanStack Query
 - **Database**: MongoDB with Mongoose
@@ -36,17 +36,20 @@ A minimal, production-ready non-custodial crypto portfolio tracker built with Ne
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone <repository-url>
    cd finance-website
    ```
 
 2. Install dependencies:
+
    ```bash
    pnpm install
    ```
 
 3. Set up environment variables:
+
    ```bash
    # Create .env.local file with:
    MONGODB_URI=mongodb://localhost:27017/collins-finance
@@ -56,6 +59,7 @@ A minimal, production-ready non-custodial crypto portfolio tracker built with Ne
    ```
 
 4. Run the development server:
+
    ```bash
    pnpm dev
    ```
@@ -101,9 +105,10 @@ The app uses a stubbed authentication system for development. In production, you
 3. Remove the stub implementation in `src/lib/auth/server.ts`
 
 For testing, the stub accepts a base64-encoded JSON token:
+
 ```javascript
 // Example token payload
-btoa(JSON.stringify({ privyId: 'test-user-123' }))
+btoa(JSON.stringify({ privyId: 'test-user-123' }));
 ```
 
 ## Deployment

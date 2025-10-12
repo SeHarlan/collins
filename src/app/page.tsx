@@ -1,7 +1,13 @@
 'use client';
 
 import { useAuth } from '@/lib/auth/hooks';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { LoadingDisplay } from '@/components/general/loading';

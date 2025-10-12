@@ -1,8 +1,8 @@
-import { FC } from "react";
-import { Slider } from "../ui/slider";
-import { OnboardingQuestion } from "@/lib/onboarding/questions";
-import { cn } from "@/lib/utils/ui-utils";
-import { Button } from "../ui/button";
+import { FC } from 'react';
+import { Slider } from '../ui/slider';
+import { OnboardingQuestion } from '@/lib/onboarding/questions';
+import { cn } from '@/lib/utils/ui-utils';
+import { Button } from '../ui/button';
 
 interface SelectSliderProps {
   currentValue?: string;
@@ -13,13 +13,23 @@ interface SelectSliderProps {
   onCurrentQuestion: boolean;
 }
 
-
-export const SelectSlider: FC<SelectSliderProps> = ({ currentValue, handleSliderChange, onNext, currentQuestion, withLabels = true, onCurrentQuestion }) => {
-  const currentOption = currentQuestion.options.find(option => option.value === currentValue);
+export const SelectSlider: FC<SelectSliderProps> = ({
+  currentValue,
+  handleSliderChange,
+  onNext,
+  currentQuestion,
+  withLabels = true,
+  onCurrentQuestion,
+}) => {
+  const currentOption = currentQuestion.options.find(
+    (option) => option.value === currentValue,
+  );
 
   const getSliderValue = () => {
     if (currentQuestion.type !== 'slider') return 0;
-    const currentIndex = currentQuestion.options.findIndex(option => option.value === currentValue);
+    const currentIndex = currentQuestion.options.findIndex(
+      (option) => option.value === currentValue,
+    );
     return currentIndex >= 0 ? currentIndex : 0;
   };
 
@@ -33,7 +43,7 @@ export const SelectSlider: FC<SelectSliderProps> = ({ currentValue, handleSlider
   };
 
   return (
-    <div className="relative space-y-4">
+    <div className="relative space-y-4 pt-6">
       <div
         className="shrink-0"
         style={{
@@ -63,8 +73,10 @@ export const SelectSlider: FC<SelectSliderProps> = ({ currentValue, handleSlider
                 : 'text-muted-foreground',
             )}
           >
-            <p className="leading-none">{currentOption?.label || "Nothing selected"}</p>
-            <p className="text-xs">{currentOption?.description || "..."}</p>
+            <p className="leading-none">
+              {currentOption?.label || 'Nothing selected'}
+            </p>
+            <p className="text-xs">{currentOption?.description || '...'}</p>
           </div>
         </div>
       )}
@@ -97,4 +109,4 @@ export const SelectSlider: FC<SelectSliderProps> = ({ currentValue, handleSlider
       )}
     </div>
   );
-}
+};

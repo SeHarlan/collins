@@ -1,10 +1,17 @@
-"use client";
+'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ProgressBar } from "./progressBar";
-import { FC } from "react";
-import { ONBOARDING_QUESTIONS } from "@/lib/onboarding/questions";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Button, ButtonHoverWrapper } from '@/components/ui/button';
+import { ProgressBar } from './progressBar';
+import { FC } from 'react';
+import { ONBOARDING_QUESTIONS } from '@/lib/onboarding/questions';
+import { ScrollArea } from '../ui/scroll-area';
 
 interface WelcomeCardProps {
   onStart: () => void;
@@ -13,10 +20,14 @@ interface WelcomeCardProps {
 export const WelcomeCard: FC<WelcomeCardProps> = ({ onStart }) => {
   const totalQuestions = ONBOARDING_QUESTIONS.length;
   return (
-    <Card>
-      <CardHeader className="space-y-4 text-center">
-        <ProgressBar current={0} total={totalQuestions} completed={0} />
-
+    <Card className="space-y-6 w-full">
+      <ProgressBar
+        current={0}
+        total={totalQuestions}
+        completed={0}
+        className="p-6"
+      />
+      <CardHeader className="space-y-4 py-0 text-center">
         <p className="text-[5rem] leading-none">🐢</p>
 
         <CardTitle className="text-2xl md:text-3xl">
@@ -27,7 +38,7 @@ export const WelcomeCard: FC<WelcomeCardProps> = ({ onStart }) => {
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 py-0">
         <div className="space-y-3 text-center">
           <div className="text-lg font-medium">
             We'll ask you {totalQuestions} quick questions about:
@@ -39,11 +50,14 @@ export const WelcomeCard: FC<WelcomeCardProps> = ({ onStart }) => {
             <div>• Financial goals</div>
           </div>
         </div>
-
-        <Button type="button" onClick={onStart} size="lg" className="w-full">
-          Start Assessment
-        </Button>
       </CardContent>
+      <div className="p-6">
+        <ButtonHoverWrapper scale={1.015}>
+          <Button type="button" onClick={onStart} size="lg" className="w-full">
+            Start Assessment
+          </Button>
+        </ButtonHoverWrapper>
+      </div>
     </Card>
   );
-}
+};

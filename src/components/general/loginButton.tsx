@@ -1,8 +1,8 @@
-import { useAuth } from "@/lib/auth/hooks";
-import { Button } from "../ui/button";
-import { Loader2Icon, LogInIcon, LogOutIcon, WalletIcon } from "lucide-react";
+import { useAuth } from '@/lib/auth/hooks';
+import { Button } from '../ui/button';
+import { Loader2Icon, LogInIcon, LogOutIcon, WalletIcon } from 'lucide-react';
 
-interface LoginButtonProps { 
+interface LoginButtonProps {
   className?: string;
 }
 export const LoginButton: React.FC<LoginButtonProps> = ({ className }) => {
@@ -29,4 +29,4 @@ export const LoginButton: React.FC<LoginButtonProps> = ({ className }) => {
       Login <LogInIcon />
     </Button>
   );
-}
+};

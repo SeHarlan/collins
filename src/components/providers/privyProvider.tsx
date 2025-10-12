@@ -1,17 +1,18 @@
 'use client';
 
 import { PrivyProvider as PrivyProviderBase } from '@privy-io/react-auth';
-import {toSolanaWalletConnectors} from "@privy-io/react-auth/solana";
-import {createSolanaRpc, createSolanaRpcSubscriptions} from '@solana/kit'; 
+import { toSolanaWalletConnectors } from '@privy-io/react-auth/solana';
+import { createSolanaRpc, createSolanaRpcSubscriptions } from '@solana/kit';
 
 const NEXT_PUBLIC_PRIVY_APP_ID = process.env.NEXT_PUBLIC_PRIVY_APP_ID || '';
-const NEXT_PUBLIC_PRIVY_CLIENT_ID = process.env.NEXT_PUBLIC_PRIVY_CLIENT_ID || '';
-/** 
+const NEXT_PUBLIC_PRIVY_CLIENT_ID =
+  process.env.NEXT_PUBLIC_PRIVY_CLIENT_ID || '';
+/**
  * Make sure to check if privy is ready to start before consuming its state
- * 
+ *
  * const {ready, user} = usePrivy();
  * !ready ? loading... : user stuff
-*/
+ */
 export function PrivyProvider({ children }: { children: React.ReactNode }) {
   return (
     <PrivyProviderBase
@@ -19,7 +20,7 @@ export function PrivyProvider({ children }: { children: React.ReactNode }) {
       clientId={NEXT_PUBLIC_PRIVY_CLIENT_ID}
       config={{
         appearance: {
-          walletList: [ 'detected_solana_wallets', 'metamask']
+          walletList: ['detected_solana_wallets', 'metamask'],
         },
         externalWallets: { solana: { connectors: toSolanaWalletConnectors() } },
         solana: {
@@ -42,5 +43,5 @@ export function PrivyProvider({ children }: { children: React.ReactNode }) {
     >
       {children}
     </PrivyProviderBase>
-  ); 
+  );
 }

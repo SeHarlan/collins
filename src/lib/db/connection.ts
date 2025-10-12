@@ -28,7 +28,7 @@ function getCachedConnection(): MongooseCache {
 
 export async function connectDB(): Promise<typeof mongoose> {
   const cached = getCachedConnection();
-  
+
   if (cached.conn) {
     return cached.conn;
   }

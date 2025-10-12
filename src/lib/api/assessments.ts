@@ -33,7 +33,6 @@ const apiClient = axios.create({
   },
 });
 
-
 /**
  * Assessment API functions using Axios
  */
@@ -43,17 +42,20 @@ export const assessmentApi = {
    */
   async create(data: AssessmentData): Promise<AssessmentCreateResponse> {
     try {
-      const response: AxiosResponse<ApiResponse<AssessmentCreateResponse>> = 
+      const response: AxiosResponse<ApiResponse<AssessmentCreateResponse>> =
         await apiClient.post(API_ROUTES.ASSESSMENTS, data);
-      
+
       if (!response.data.success) {
-        throw new Error(response.data.error?.message || 'Failed to create assessment');
+        throw new Error(
+          response.data.error?.message || 'Failed to create assessment',
+        );
       }
-      
+
       return response.data.data!;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const errorData = error.response?.data as ApiResponse<AssessmentApiError>;
+        const errorData = error.response
+          ?.data as ApiResponse<AssessmentApiError>;
         throw new Error(errorData?.error?.message || error.message);
       }
       throw error;
@@ -65,17 +67,20 @@ export const assessmentApi = {
    */
   async getById(id: string): Promise<AssessmentData> {
     try {
-      const response: AxiosResponse<ApiResponse<AssessmentData>> = 
+      const response: AxiosResponse<ApiResponse<AssessmentData>> =
         await apiClient.get(`${API_ROUTES.ASSESSMENTS}/${id}`);
-      
+
       if (!response.data.success) {
-        throw new Error(response.data.error?.message || 'Failed to fetch assessment');
+        throw new Error(
+          response.data.error?.message || 'Failed to fetch assessment',
+        );
       }
-      
+
       return response.data.data!;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const errorData = error.response?.data as ApiResponse<AssessmentApiError>;
+        const errorData = error.response
+          ?.data as ApiResponse<AssessmentApiError>;
         throw new Error(errorData?.error?.message || error.message);
       }
       throw error;
@@ -87,17 +92,20 @@ export const assessmentApi = {
    */
   async getByUserId(userId: string): Promise<AssessmentData[]> {
     try {
-      const response: AxiosResponse<ApiResponse<AssessmentData[]>> = 
+      const response: AxiosResponse<ApiResponse<AssessmentData[]>> =
         await apiClient.get(`${API_ROUTES.ASSESSMENTS}?userId=${userId}`);
-      
+
       if (!response.data.success) {
-        throw new Error(response.data.error?.message || 'Failed to fetch assessments');
+        throw new Error(
+          response.data.error?.message || 'Failed to fetch assessments',
+        );
       }
-      
+
       return response.data.data!;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const errorData = error.response?.data as ApiResponse<AssessmentApiError>;
+        const errorData = error.response
+          ?.data as ApiResponse<AssessmentApiError>;
         throw new Error(errorData?.error?.message || error.message);
       }
       throw error;
@@ -111,5 +119,6 @@ export const assessmentApi = {
 export const assessmentQueryKeys = {
   all: QUERY_KEYS.ASSESSMENTS,
   byId: (id: string) => QUERY_KEYS.ASSESSMENT(id),
-  byUserId: (userId: string) => [...QUERY_KEYS.ASSESSMENTS, 'user', userId] as const,
+  byUserId: (userId: string) =>
+    [...QUERY_KEYS.ASSESSMENTS, 'user', userId] as const,
 } as const;

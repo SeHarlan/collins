@@ -1,7 +1,7 @@
-import { FC } from "react";
-import { Button } from "../ui/button";
-import { OnboardingOption } from "@/lib/onboarding/questions";
-import { cn } from "@/lib/utils/ui-utils";
+import { FC } from 'react';
+import { Button } from '../ui/button';
+import { OnboardingOption } from '@/lib/onboarding/questions';
+import { cn } from '@/lib/utils/ui-utils';
 
 interface SelectButtonProps {
   option: OnboardingOption;
@@ -9,15 +9,18 @@ interface SelectButtonProps {
   handleSelect: (value: string) => void;
 }
 
-export const SelectButton: FC<SelectButtonProps> = ({ option, currentValue, handleSelect }) => { 
+export const SelectButton: FC<SelectButtonProps> = ({
+  option,
+  currentValue,
+  handleSelect,
+}) => {
   return (
     <Button
       key={option.value}
       type="button"
       variant={currentValue === option.value ? 'default' : 'outline'}
       className={cn(
-        'h-auto justify-start px-4 py-3 text-left md:py-4',
-        'transition-all duration-200 hover:scale-[1.02]',
+        'w-full h-auto justify-start px-4 py-3 text-left md:py-4',
         currentValue === option.value && 'ring-primary ring-2 ring-offset-2',
       )}
       onClick={() => handleSelect(option.value)}
@@ -40,4 +43,4 @@ export const SelectButton: FC<SelectButtonProps> = ({ option, currentValue, hand
       </div>
     </Button>
   );
-}
+};

@@ -47,4 +47,5 @@ const assetSchema = new Schema<AssetDocument>(
   },
 );
 
-export const Asset: Model<AssetDocument> = models[ASSET_MODEL] || model<AssetDocument>(ASSET_MODEL, assetSchema);
+export const Asset: Model<AssetDocument> =
+  models[ASSET_MODEL] || model<AssetDocument>(ASSET_MODEL, assetSchema);

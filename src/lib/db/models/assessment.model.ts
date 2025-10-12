@@ -1,5 +1,9 @@
 import { Schema, model, models, Model, Document, Types } from 'mongoose';
-import { ASSESSMENT_MODEL, ASSESSMENT_USER_REFERENCE, USER_MODEL } from '@/constants/models';
+import {
+  ASSESSMENT_MODEL,
+  ASSESSMENT_USER_REFERENCE,
+  USER_MODEL,
+} from '@/constants/models';
 import {
   TimeHorizon,
   MaxDrawdown,
@@ -14,10 +18,10 @@ import {
   AssessmentData,
 } from '@/lib/db/schemas/assessment.schema';
 
-
-
 // MongoDB document interface
-export interface AssessmentDocument extends Omit<AssessmentData, 'userId'>, Document {
+export interface AssessmentDocument
+  extends Omit<AssessmentData, 'userId'>,
+    Document {
   [ASSESSMENT_USER_REFERENCE]: Types.ObjectId;
 }
 
@@ -86,4 +90,6 @@ const assessmentSchema = new Schema<AssessmentDocument>(
   },
 );
 
-export const Assessment: Model<AssessmentDocument> = models[ASSESSMENT_MODEL] || model<AssessmentDocument>(ASSESSMENT_MODEL, assessmentSchema);
+export const Assessment: Model<AssessmentDocument> =
+  models[ASSESSMENT_MODEL] ||
+  model<AssessmentDocument>(ASSESSMENT_MODEL, assessmentSchema);

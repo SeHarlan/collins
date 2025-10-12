@@ -26,7 +26,9 @@ export class AssetRepository {
   /**
    * Find an asset by asset address
    */
-  static async findByAssetAddress(assetAddress: string): Promise<AssetDocument | null> {
+  static async findByAssetAddress(
+    assetAddress: string,
+  ): Promise<AssetDocument | null> {
     await connectDB();
     return Asset.findOne({ assetAddress }).exec();
   }
@@ -99,8 +101,8 @@ export class AssetRepository {
    */
   static async findByName(name: string): Promise<AssetDocument[]> {
     await connectDB();
-    return Asset.find({ 
-      name: { $regex: name, $options: 'i' } 
+    return Asset.find({
+      name: { $regex: name, $options: 'i' },
     }).exec();
   }
 
@@ -112,8 +114,8 @@ export class AssetRepository {
     return Asset.find({
       $or: [
         { name: { $regex: query, $options: 'i' } },
-        { description: { $regex: query, $options: 'i' } }
-      ]
+        { description: { $regex: query, $options: 'i' } },
+      ],
     }).exec();
   }
 

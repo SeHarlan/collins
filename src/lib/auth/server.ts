@@ -26,7 +26,7 @@ export async function getAuthUser(): Promise<AuthUser | null> {
     // TODO: In production, verify the JWT token with Privy
     // For now, we'll use a stub implementation
     const token = authorization.substring(7);
-    
+
     // Stub: Extract user ID from token (in reality, decode JWT)
     // For demo purposes, we'll accept a base64 encoded JSON
     try {
@@ -34,7 +34,7 @@ export async function getAuthUser(): Promise<AuthUser | null> {
       if (!decoded.privyId) {
         return null;
       }
-      
+
       return {
         id: decoded.id || decoded.privyId,
         privyId: decoded.privyId,
@@ -55,18 +55,20 @@ export async function getAuthUser(): Promise<AuthUser | null> {
  */
 export async function requireAuth(): Promise<AuthUser> {
   const user = await getAuthUser();
-  
+
   if (!user) {
     throw new Error('Authentication required');
   }
-  
+
   return user;
 }
 
 /**
  * Get or create a user in the database based on auth info
  */
-export async function getOrCreateDbUser(authUser: AuthUser): Promise<UserDocument> {
+export async function getOrCreateDbUser(
+  authUser: AuthUser,
+): Promise<UserDocument> {
   return UserRepository.findOrCreate(authUser.privyId, {
     email: authUser.email,
   });

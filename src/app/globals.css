@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @theme inline {
   --color-background: var(--background);
@@ -41,13 +41,12 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-
   --height-screen: 100dvh;
 }
 
 :root {
   /* --radius: .625rem; */
-  --radius: .525rem;
+  --radius: 0.525rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
@@ -61,7 +60,7 @@
   --secondary: oklch(95.822% 0.06191 195.023);
   --secondary-foreground: oklch(0.208 0.042 265.755);
   /* --muted: oklch(0.968 0.007 247.896); */
-    --muted: oklch(94.57% 0.01497 251.307);
+  --muted: oklch(94.57% 0.01497 251.307);
   /* --muted-foreground: oklch(0.554 0.046 257.417); */
   --muted-foreground: oklch(57.824% 0.03706 256.841);
   --accent: oklch(0.968 0.007 247.896);

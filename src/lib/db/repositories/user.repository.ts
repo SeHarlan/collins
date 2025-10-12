@@ -1,5 +1,14 @@
 import { Types } from 'mongoose';
-import { User, UserDocument, UserData, UserWithVirtuals, UserWithPortfolioAssets, UserAssessmentPopulation, UserPortfolioPopulation, UserPortfolioWithAssetsPopulation } from '../models/user.model';
+import {
+  User,
+  UserDocument,
+  UserData,
+  UserWithVirtuals,
+  UserWithPortfolioAssets,
+  UserAssessmentPopulation,
+  UserPortfolioPopulation,
+  UserPortfolioWithAssetsPopulation,
+} from '../models/user.model';
 import { connectDB } from '../connection';
 
 export class UserRepository {
@@ -107,7 +116,9 @@ export class UserRepository {
   /**
    * Find user by ID with assessment and portfolios
    */
-  static async findByIdWithVirtuals(id: string): Promise<UserWithVirtuals | null> {
+  static async findByIdWithVirtuals(
+    id: string,
+  ): Promise<UserWithVirtuals | null> {
     await connectDB();
     if (!Types.ObjectId.isValid(id)) {
       return null;
@@ -121,7 +132,9 @@ export class UserRepository {
   /**
    * Find user by ID with assessment and portfolios (with assets)
    */
-  static async findByIdWithPortfolioAssets(id: string): Promise<UserWithPortfolioAssets | null> {
+  static async findByIdWithPortfolioAssets(
+    id: string,
+  ): Promise<UserWithPortfolioAssets | null> {
     await connectDB();
     if (!Types.ObjectId.isValid(id)) {
       return null;

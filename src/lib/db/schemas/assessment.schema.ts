@@ -91,14 +91,20 @@ export const AssessmentSchema = z.object({
   [ASSESSMENT_SCHEMA_KEYS.userId]: z.string().min(1), // This will be the ObjectId as string
   [ASSESSMENT_SCHEMA_KEYS.timeHorizon]: z.nativeEnum(TimeHorizon),
   [ASSESSMENT_SCHEMA_KEYS.maxDrawdown]: z.nativeEnum(MaxDrawdown),
-  [ASSESSMENT_SCHEMA_KEYS.portfolioDropReaction]: z.nativeEnum(PortfolioDropReaction),
+  [ASSESSMENT_SCHEMA_KEYS.portfolioDropReaction]: z.nativeEnum(
+    PortfolioDropReaction,
+  ),
   [ASSESSMENT_SCHEMA_KEYS.incomeStability]: z.nativeEnum(IncomeStability),
-  [ASSESSMENT_SCHEMA_KEYS.emergencyFundMonths]: z.nativeEnum(EmergencyFundMonths),
-  [ASSESSMENT_SCHEMA_KEYS.investingExperience]: z.nativeEnum(InvestingExperience),
+  [ASSESSMENT_SCHEMA_KEYS.emergencyFundMonths]:
+    z.nativeEnum(EmergencyFundMonths),
+  [ASSESSMENT_SCHEMA_KEYS.investingExperience]:
+    z.nativeEnum(InvestingExperience),
   [ASSESSMENT_SCHEMA_KEYS.cryptoComfort]: z.nativeEnum(CryptoComfort),
   [ASSESSMENT_SCHEMA_KEYS.goalCriticality]: z.nativeEnum(GoalCriticality),
   [ASSESSMENT_SCHEMA_KEYS.pastLossReaction]: z.nativeEnum(PastLossReaction),
-  [ASSESSMENT_SCHEMA_KEYS.rebalancingWillingness]: z.nativeEnum(RebalancingWillingness),
+  [ASSESSMENT_SCHEMA_KEYS.rebalancingWillingness]: z.nativeEnum(
+    RebalancingWillingness,
+  ),
 });
 
 export type AssessmentData = z.infer<typeof AssessmentSchema>;

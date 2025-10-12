@@ -17,11 +17,9 @@ export const useAuth = () => {
       setUser({
         privyId: authUser.id,
         email: authUser.email?.address,
-       
       });
     }
-  }, [ authUser ]);
-
+  }, [authUser]);
 
   return {
     isAuthenticated: authenticated,
@@ -29,8 +27,8 @@ export const useAuth = () => {
     user,
     login,
     logout,
-  }
-}
+  };
+};
 
 export const useRequireAuth = () => {
   const authProps = useAuth();
@@ -44,4 +42,4 @@ export const useRequireAuth = () => {
   }, [authReady, isAuthenticated, router]);
 
   return authProps;
-}
+};

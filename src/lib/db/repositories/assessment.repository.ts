@@ -1,5 +1,9 @@
 import { Types } from 'mongoose';
-import { Assessment, AssessmentDocument, AssessmentData } from '../models/assessment.model';
+import {
+  Assessment,
+  AssessmentDocument,
+  AssessmentData,
+} from '../models/assessment.model';
 import { connectDB } from '../connection';
 
 export class AssessmentRepository {
@@ -26,7 +30,9 @@ export class AssessmentRepository {
   /**
    * Find assessment by user ID
    */
-  static async findByUserId(userId: string): Promise<AssessmentDocument | null> {
+  static async findByUserId(
+    userId: string,
+  ): Promise<AssessmentDocument | null> {
     await connectDB();
     if (!Types.ObjectId.isValid(userId)) {
       return null;

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils/ui-utils";
+import { cn } from '@/lib/utils/ui-utils';
 
 interface ProgressBarProps {
   current: number;
@@ -9,18 +9,25 @@ interface ProgressBarProps {
   completed: number;
 }
 
-export function ProgressBar({ current, total, className, completed }: ProgressBarProps) {
+export function ProgressBar({
+  current,
+  total,
+  className,
+  completed,
+}: ProgressBarProps) {
   const percentage = (completed / total) * 100;
 
   return (
-    <div className={cn("w-full", className)}>
-      <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
-        <span>Question {current} of {total}</span>
+    <div className={cn('w-full', className)}>
+      <div className="text-muted-foreground mb-2 flex items-center justify-between text-sm">
+        <span>
+          Question {current} of {total}
+        </span>
         <span>{Math.round(percentage)}% complete</span>
       </div>
-      <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+      <div className="bg-muted h-2 w-full rounded-full shadow-inner">
         <div
-          className="h-full bg-primary transition-all duration-300 ease-out"
+          className="bg-primary h-full transition-all duration-300 ease-out shadow-md rounded-full"
           style={{ width: `${percentage}%` }}
         />
       </div>

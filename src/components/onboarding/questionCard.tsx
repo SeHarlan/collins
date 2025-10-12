@@ -1,26 +1,34 @@
-"use client";
+'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
-import { cn } from "@/lib/utils/ui-utils";
-import { ONBOARDING_QUESTIONS, OnboardingQuestion } from "@/lib/onboarding/questions";
-import { useAtom } from "jotai";
-import { onboardingDataAtom, onboardingQuestionIndexAtom } from "@/lib/state/atoms/onboarding.atom";
-import { ProgressBar } from "./progressBar";
-import { SelectButton } from "./selectButton";
-import { SelectSlider } from "./selectSlider";
-import { useRef } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Button, ButtonHoverWrapper } from '@/components/ui/button';
+import { AnimatePresence, motion } from 'motion/react';
+import {
+  ONBOARDING_QUESTIONS,
+  OnboardingQuestion,
+} from '@/lib/onboarding/questions';
+import { useAtom } from 'jotai';
+import {
+  onboardingDataAtom,
+  onboardingQuestionIndexAtom,
+} from '@/lib/state/atoms/onboarding.atom';
+import { ProgressBar } from './progressBar';
+import { SelectButton } from './selectButton';
+import { SelectSlider } from './selectSlider';
+import { useRef } from 'react';
 
 interface QuestionCardProps {
   onNext: () => void;
   onPrevious: () => void;
 }
 
-export function QuestionCard({ 
-  onNext, 
-  onPrevious, 
-}: QuestionCardProps) {
+export function QuestionCard({ onNext, onPrevious }: QuestionCardProps) {
   const [onboardingData, setOnboardingData] = useAtom(onboardingDataAtom);
   const [currentQuestionIndex] = useAtom(onboardingQuestionIndexAtom);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -29,8 +37,10 @@ export function QuestionCard({
   const currentValue = onboardingData[currentQuestion.id];
   const isFirst = currentQuestionIndex === 0;
   const isLast = currentQuestionIndex === ONBOARDING_QUESTIONS.length - 1;
-  
-  const completed = Object.values(onboardingData).filter(value => value !== undefined).length;
+
+  const completed = Object.values(onboardingData).filter(
+    (value) => value !== undefined,
+  ).length;
   const onCurrentQuestion = currentQuestionIndex === completed;
 
   const handleSelect = (optionValue: string) => {
@@ -38,16 +48,16 @@ export function QuestionCard({
       clearTimeout(timeoutRef.current);
     }
 
-    setOnboardingData(prev => ({
+    setOnboardingData((prev) => ({
       ...prev,
-      [currentQuestion.id]: optionValue
+      [currentQuestion.id]: optionValue,
     }));
 
     if (onCurrentQuestion) {
       // if on current question auto-advance
       timeoutRef.current = setTimeout(() => {
         onNext();
-      }, 500);
+      }, 300);
     }
   };
 
@@ -62,54 +72,85 @@ export function QuestionCard({
   };
 
   return (
-    <Card>
-      <CardHeader className="space-y-4 text-center">
-        <ProgressBar
-          current={currentQuestionIndex + 1}
-          total={ONBOARDING_QUESTIONS.length}
-          completed={completed}
-        />
+    <Card className="relative flex h-full w-full flex-col justify-between gap-6 overflow-hidden">
+      <ProgressBar
+        current={currentQuestionIndex + 1}
+        total={ONBOARDING_QUESTIONS.length}
+        completed={completed}
+        className="p-6"
+      />
 
-        <p className="hidden text-[5rem] leading-none md:block">
-          {currentQuestion.icon}
-        </p>
+      <motion.div
+        layout
+        key={currentQuestion.id}
+        initial={{ opacity: 0, y: 5 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          type: 'spring',
+          duration: 1,
+          bounce: 0.5,
+        }}
+      >
+        <CardHeader className="space-y-4 py-0 text-center">
+          <p className="hidden text-[5rem] leading-none md:block">
+            {currentQuestion.icon}
+          </p>
 
-        <CardTitle className="text-2xl md:text-3xl">
-          {currentQuestion.title}
-        </CardTitle>
-        <CardDescription className="text-muted-foreground text-sm md:text-lg">
-          {currentQuestion.subtitle}
-        </CardDescription>
-      </CardHeader>
+          <CardTitle className="text-2xl md:text-3xl">
+            {currentQuestion.title}
+          </CardTitle>
+          <CardDescription className="text-muted-foreground text-sm md:text-lg">
+            {currentQuestion.subtitle}
+          </CardDescription>
+        </CardHeader>
+      </motion.div>
 
-      <CardContent className="space-y-6">
-        <div>
-          <label className="sr-only">{currentQuestion.title}</label>
-          <div>
-            {currentQuestion.type === 'buttons' && (
-              <div className="grid gap-3">
-                {currentQuestion.options.map((option) => (
-                  <SelectButton
-                    option={option}
-                    currentValue={currentValue}
-                    handleSelect={handleSelect}
-                  />
-                ))}
-              </div>
-            )}
-            {currentQuestion.type === 'slider' && (
-              <SelectSlider
-                currentValue={currentValue}
-                handleSliderChange={handleSliderChange}
-                currentQuestion={currentQuestion}
-                onCurrentQuestion={onCurrentQuestion}
-                onNext={onNext}
-              />
-            )}
+      <CardContent className="py-2">
+        {currentQuestion.type === 'buttons' && (
+          <div className="grid gap-3">
+            {currentQuestion.options.map((option, index) => (
+              <motion.div
+                key={option.value}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  type: 'spring',
+                  duration: 0.8,
+                  bounce: 0.5,
+                  delay: index * 0.1,
+                }}
+                whileHover={{
+                  scale: 1.02,
+                  // Will be used when gesture starts
+                  transition: {
+                    duration: 0.9,
+                    type: 'spring',
+                    bounce: 0.66,
+                  },
+                }}
+                className="w-full"
+              >
+                <SelectButton
+                  option={option}
+                  currentValue={currentValue}
+                  handleSelect={handleSelect}
+                />
+              </motion.div>
+            ))}
           </div>
-        </div>
-
-        <div className="flex justify-between gap-4">
+        )}
+        {currentQuestion.type === 'slider' && (
+          <SelectSlider
+            currentValue={currentValue}
+            handleSliderChange={handleSliderChange}
+            currentQuestion={currentQuestion}
+            onCurrentQuestion={onCurrentQuestion}
+            onNext={onNext}
+          />
+        )}
+      </CardContent>
+      <div className="flex justify-between gap-4 p-6">
+        <ButtonHoverWrapper disabled={isFirst}>
           <Button
             type="button"
             variant="secondary"
@@ -119,7 +160,8 @@ export function QuestionCard({
           >
             Previous
           </Button>
-
+        </ButtonHoverWrapper>
+        <ButtonHoverWrapper disabled={!currentValue}>
           <Button
             type="button"
             onClick={onNext}
@@ -128,8 +170,8 @@ export function QuestionCard({
           >
             {isLast ? 'Complete' : 'Next'}
           </Button>
-        </div>
-      </CardContent>
+        </ButtonHoverWrapper>
+      </div>
     </Card>
   );
 }

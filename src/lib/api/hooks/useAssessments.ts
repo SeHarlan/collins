@@ -1,5 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { assessmentApi, assessmentQueryKeys, AssessmentCreateResponse } from '../assessments';
+import {
+  assessmentApi,
+  assessmentQueryKeys,
+  AssessmentCreateResponse,
+} from '../assessments';
 import { AssessmentData } from '@/lib/db/schemas/assessment.schema';
 
 /**
@@ -34,7 +38,10 @@ export function useAssessment(id: string, enabled: boolean = true) {
 /**
  * Hook to get assessments by user ID
  */
-export function useAssessmentsByUserId(userId: string, enabled: boolean = true) {
+export function useAssessmentsByUserId(
+  userId: string,
+  enabled: boolean = true,
+) {
   return useQuery({
     queryKey: assessmentQueryKeys.byUserId(userId),
     queryFn: () => assessmentApi.getByUserId(userId),
