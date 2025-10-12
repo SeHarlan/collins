@@ -1,0 +1,11 @@
+---
+description: When dealing with database reads and writes
+alwaysApply: false
+---
+- Use MongoDB and Mongoose.
+- Define schemas/models under src/db; use lean queries for reads.
+- Keep server/database code on the server (no client imports).
+- Use indexes, validation, and schema methods/statics where helpful.
+
+Refer to documentation and best practices here:
+Docs: https://mongoosejs.com/docs/

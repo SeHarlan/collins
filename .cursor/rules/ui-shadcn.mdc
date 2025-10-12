@@ -1,0 +1,10 @@
+---
+description: When creating UI and React components
+alwaysApply: false
+---
+- Use shadcn/ui components and patterns.
+- Prefer clean composition; avoid deep prop drilling.
+- Use Tailwind when styling; avoid custom CSS unless necessary.
+
+Refer to documentation and best practices here:
+Docs: https://ui.shadcn.com/docs

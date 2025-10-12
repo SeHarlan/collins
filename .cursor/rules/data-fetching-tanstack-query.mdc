@@ -1,0 +1,10 @@
+---
+description: When fetching server data
+alwaysApply: false
+---
+- Use TanStack Query/Mutation hooks; no raw fetch in components.
+- Centralize API calls in thin wrappers (src/lib/api/*) and reuse query keys.
+- Handle loading/error states via Query results (avoid duplicate spinners).
+
+Refer to documentation and best practices here:
+Docs: https://tanstack.com/query/latest/docs/framework/react/overview

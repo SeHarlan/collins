@@ -1,0 +1,11 @@
+---
+description: When dealing with state
+alwaysApply: false
+---
+- Use Jotai when state is shared across files/routes.
+- Local component state stays local.
+- Co-locate atoms/selectors near their domain (e.g., src/state/<domain>.ts).
+- Keep atoms minimal; derive with selectors where possible.
+
+Refer to documentation and best practices here:
+Docs: https://jotai.org/docs

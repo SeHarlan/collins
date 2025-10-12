@@ -1,0 +1,9 @@
+---
+description: General guidance 
+globs:
+alwaysApply: true
+---
+- Prefer official docs and the latest stable examples.
+- Keep code small, clean, and production-ready.
+- TypeScript strict; avoid any.
+- Keep concerns separated: UI, data fetching, and state.

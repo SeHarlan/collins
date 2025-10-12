@@ -1,0 +1,10 @@
+---
+description: When dealing with user authentication or wallets
+alwaysApply: false
+---
+- Use Privy React SDK for login, sessions, and embedded wallets.
+- Prefer native on-ramps via Privy flows; do not hand-roll wallet UX.
+- Ensure secure recovery paths and the ability to export/switch to external wallets.
+
+Refer to documentation and best practices here:
+Docs: https://docs.privy.io/basics/get-started/about
