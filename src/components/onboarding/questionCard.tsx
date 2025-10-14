@@ -12,7 +12,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import {
   ONBOARDING_QUESTIONS,
   OnboardingQuestion,
-} from '@/lib/onboarding/questions';
+} from '@/lib/api/assessments/questions';
 import { useAtom } from 'jotai';
 import {
   onboardingDataAtom,

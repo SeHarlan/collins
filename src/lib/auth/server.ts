@@ -1,48 +1,41 @@
 import { headers } from 'next/headers';
 import { UserRepository } from '@/lib/db/repositories/user.repository';
 import { UserDocument } from '@/lib/db/models/user.model';
+import { PrivyClient } from '@privy-io/node';
+import { NextRequest } from 'next/server';
+import { API_MESSAGES } from '@/constants/apiMessages';
+import { AuthUser } from './types';
 
-export interface AuthUser {
-  id: string;
-  privyId: string;
-  email?: string;
-  walletAddress?: string;
-}
+
+
+// Initialize Privy client with verification key for better performance
+const privy = new PrivyClient({
+  appId: process.env.PRIVY_APP_ID!,
+  appSecret: process.env.PRIVY_APP_SECRET!,
+  // Add your verification key from the dashboard for better performance
+  // jwtVerificationKey: process.env.PRIVY_JWT_VERIFICATION_KEY,
+});
 
 /**
- * Get the authenticated user from the request
- * This is a stub implementation - in production, this would verify
- * the Privy JWT token and extract user information
+ * Get the authenticated user from the request by validating the Privy JWT token
  */
-export async function getAuthUser(): Promise<AuthUser | null> {
+export async function getAuthId(req: NextRequest): Promise<string | null> {
   try {
-    const headersList = headers();
-    const authorization = headersList.get('authorization');
+    const accessToken = req.headers.get('authorization')?.replace('Bearer ', '');
 
-    if (!authorization?.startsWith('Bearer ')) {
-      return null;
+    if (!accessToken) {
+      throw new Error('Token not found');
     }
 
-    // TODO: In production, verify the JWT token with Privy
-    // For now, we'll use a stub implementation
-    const token = authorization.substring(7);
-
-    // Stub: Extract user ID from token (in reality, decode JWT)
-    // For demo purposes, we'll accept a base64 encoded JSON
-    try {
-      const decoded = JSON.parse(Buffer.from(token, 'base64').toString());
-      if (!decoded.privyId) {
-        return null;
-      }
-
-      return {
-        id: decoded.id || decoded.privyId,
-        privyId: decoded.privyId,
-        email: decoded.email,
-      };
-    } catch {
-      return null;
+    // Use Privy's built-in verification method
+    const verifiedToken = await privy.utils().auth().verifyAuthToken(accessToken);
+    console.log("🚀 ~ getAuthId ~ verifiedToken:", verifiedToken)
+    
+    if (!verifiedToken) {
+      throw new Error('Token not verified');
     }
+
+    return verifiedToken.user_id
   } catch (error) {
     console.error('Auth error:', error);
     return null;
@@ -51,25 +44,16 @@ export async function getAuthUser(): Promise<AuthUser | null> {
 
 /**
  * Require authentication for an API route
- * Returns the authenticated user or throws an error
+ * Returns the authenticated id or throws an error
  */
-export async function requireAuth(): Promise<AuthUser> {
-  const user = await getAuthUser();
+export async function getRequiredAuthId(req: NextRequest): Promise<string> {
+  const authId = await getAuthId(req);
 
-  if (!user) {
-    throw new Error('Authentication required');
+  if (!authId) {
+    throw new Error(API_MESSAGES.AUTH_REQUIRED_ERROR);
   }
 
-  return user;
+  return authId;
 }
 
-/**
- * Get or create a user in the database based on auth info
- */
-export async function getOrCreateDbUser(
-  authUser: AuthUser,
-): Promise<UserDocument> {
-  return UserRepository.findOrCreate(authUser.privyId, {
-    email: authUser.email,
-  });
-}
+

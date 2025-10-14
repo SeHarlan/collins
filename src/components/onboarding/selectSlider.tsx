@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Slider } from '../ui/slider';
-import { OnboardingQuestion } from '@/lib/onboarding/questions';
+import { OnboardingQuestion } from '@/lib/api/assessments/questions';
 import { cn } from '@/lib/utils/ui-utils';
 import { Button } from '../ui/button';
 

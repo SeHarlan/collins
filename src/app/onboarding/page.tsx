@@ -14,7 +14,7 @@ import {
   onboardingCompletedAtom,
   onboardingIdAtom,
 } from '@/lib/state/atoms/onboarding.atom';
-import { ONBOARDING_QUESTIONS } from '@/lib/onboarding/questions';
+import { ONBOARDING_QUESTIONS } from '@/lib/api/assessments/questions';
 import { CLIENT_PATHWAYS } from '@/constants/clientPathways';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -23,7 +23,7 @@ import { AnimatePresence, motion } from 'motion/react';
 type OnboardingStep = 'welcome' | 'questions' | 'completion';
 
 export default function OnboardingPage() {
-  const { user, authReady } = useRequireAuth();
+  const { authUser, authReady } = useRequireAuth();
   const router = useRouter();
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useAtom(
@@ -43,12 +43,12 @@ export default function OnboardingPage() {
       : 'questions';
 
   const handleStart = () => {
-    if (!user?.privyId) {
+    if (!authUser?.privyId) {
       return;
     }
 
     setCurrentQuestionIndex(0);
-    setOnboardingId(user.privyId);
+    setOnboardingId(authUser.privyId);
     setDirection(1);
   };
 
@@ -73,24 +73,24 @@ export default function OnboardingPage() {
   };
 
   useEffect(() => {
-    if (!user?.privyId || !onboardingId) return;
+    if (!authUser?.privyId || !onboardingId) return;
 
     // If user has changed reset the onboarding process
-    if (onboardingId !== user.privyId) {
+    if (onboardingId !== authUser.privyId) {
       reset();
     }
-  }, [user?.privyId, onboardingId]);
+  }, [authUser?.privyId, onboardingId]);
 
   useEffect(() => {
     // Redirect to dashboard if onboarding is completed
     if (completed) {
-      router.push(CLIENT_PATHWAYS.DASHBOARD);
+      // router.push(CLIENT_PATHWAYS.DASHBOARD);
       return;
     }
   }, [completed, router]);
 
 
-  if (!authReady || !user) {
+  if (!authReady || !authUser) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center">
         <LoadingDisplay />

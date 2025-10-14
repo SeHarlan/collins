@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Button } from '../ui/button';
-import { OnboardingOption } from '@/lib/onboarding/questions';
+import { OnboardingOption } from '@/lib/api/assessments/questions';
 import { cn } from '@/lib/utils/ui-utils';
 
 interface SelectButtonProps {

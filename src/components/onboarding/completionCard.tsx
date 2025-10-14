@@ -15,11 +15,13 @@ import {
 } from '@/lib/state/atoms/onboarding.atom';
 import { useRouter } from 'next/navigation';
 import { CLIENT_PATHWAYS } from '@/constants/clientPathways';
-import { ONBOARDING_QUESTIONS } from '@/lib/onboarding/questions';
+import { ONBOARDING_QUESTIONS } from '@/lib/api/assessments/questions';
 import { ProgressBar } from './progressBar';
 import { ArrowLeftIcon } from 'lucide-react';
-import { useCreateAssessment } from '@/lib/api/hooks/useAssessments';
+import { useCreateAssessment } from '@/lib/api/assessments/hooks';
 import { toast } from 'sonner';
+import { AssessmentSchema } from '@/lib/db/schemas/assessment.schema';
+import { useAuth, useRequireAuth } from '@/lib/auth/hooks';
 
 interface CompletionCardProps {
   onPrevious: () => void;
@@ -29,6 +31,7 @@ export function CompletionCard({ onPrevious }: CompletionCardProps) {
   const router = useRouter();
   const [onboardingData] = useAtom(onboardingDataAtom);
   const [_, setCompleted] = useAtom(onboardingCompletedAtom);
+  const { authUser } = useAuth();
 
   const createAssessmentMutation = useCreateAssessment();
 
@@ -63,33 +66,22 @@ export function CompletionCard({ onPrevious }: CompletionCardProps) {
   const riskProfile = getRiskProfile();
 
   const handleSave = async () => {
-    return
+    if (!authUser) return;
     try {
       // Transform onboarding data to assessment data
-      const assessmentData: AssessmentData = {
-        userId: 'temp-user-id', // TODO: Get actual user ID from auth context
-        timeHorizon: onboardingData.timeHorizon!,
-        maxDrawdown: onboardingData.maxDrawdown!,
-        portfolioDropReaction: onboardingData.portfolioDropReaction!,
-        incomeStability: onboardingData.incomeStability!,
-        emergencyFundMonths: onboardingData.emergencyFundMonths!,
-        investingExperience: onboardingData.investingExperience!,
-        cryptoComfort: onboardingData.cryptoComfort!,
-        goalCriticality: onboardingData.goalCriticality!,
-        pastLossReaction: onboardingData.pastLossReaction!,
-        rebalancingWillingness: onboardingData.rebalancingWillingness!,
-      };
 
-      await createAssessmentMutation.mutateAsync(assessmentData);
+      await createAssessmentMutation.mutateAsync(onboardingData);
 
-      toast.success('Assessment saved successfully!', {
-        description: 'You can now start investing',
+      toast.success('Congratulations!', {
+        description: 'You can now start investing.',
       });
       setCompleted(true);
       router.push(CLIENT_PATHWAYS.DASHBOARD);
     } catch (error) {
-      console.error('Failed to save assessment:', error);
-      // Error handling is managed by TanStack Query
+      // Request error handling is managed by TanStack Query
+      toast.error('Something went wrong.', {
+        description: 'Please refresh the page and try again.',
+      });
     }
   };
 

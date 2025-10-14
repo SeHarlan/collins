@@ -24,7 +24,6 @@ export interface AssessmentDocument
     Document {
   [ASSESSMENT_USER_REFERENCE]: Types.ObjectId;
 }
-
 // Mongoose schema
 const assessmentSchema = new Schema<AssessmentDocument>(
   {

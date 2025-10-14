@@ -1,8 +1,9 @@
 import { useFundWallet } from '@privy-io/react-auth/solana';
 import { useAuth } from '@/lib/auth/hooks';
 import { Button } from '../ui/button';
-import { useEmbeddedWallet } from '@/lib/wallets/hooks';
+
 import { WalletIcon } from 'lucide-react';
+import { useEmbeddedWallet } from '@/lib/api/wallets/hooks';
 
 export const FundWalletButton = () => {
   const { fundWallet } = useFundWallet();

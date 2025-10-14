@@ -7,19 +7,24 @@ export interface ApiError {
   details?: unknown;
 }
 
-export interface ApiResponse<T = unknown> {
-  success: boolean;
-  data?: T;
-  error?: ApiError;
+export type ApiResponseSuccess<T = unknown> = {
+  success: true;
+  data: T;
 }
 
-/**
- * Create a success response
- */
+export type ApiResponseError = {
+  success: false;
+  error: ApiError;
+}
+
+export type ApiResponse<T = unknown> = ApiResponseSuccess<T> | ApiResponseError;
+
+
+/** Create a success response */
 export function successResponse<T>(
   data: T,
   status: number = 200,
-): NextResponse<ApiResponse<T>> {
+): NextResponse<ApiResponseSuccess<T>> {
   return NextResponse.json(
     {
       success: true,
@@ -29,15 +34,13 @@ export function successResponse<T>(
   );
 }
 
-/**
- * Create an error response
- */
+/** Create an error response */
 export function errorResponse(
   message: string,
   status: number = 400,
   code?: string,
   details?: unknown,
-): NextResponse<ApiResponse> {
+): NextResponse<ApiResponseError> {
   return NextResponse.json(
     {
       success: false,
@@ -56,7 +59,7 @@ export function errorResponse(
  */
 export function validationErrorResponse(
   error: ZodError,
-): NextResponse<ApiResponse> {
+): NextResponse<ApiResponseError> {
   return errorResponse(
     'Validation failed',
     400,
@@ -70,7 +73,7 @@ export function validationErrorResponse(
  */
 export function unauthorizedResponse(
   message: string = 'Unauthorized',
-): NextResponse<ApiResponse> {
+): NextResponse<ApiResponseError> {
   return errorResponse(message, 401, 'UNAUTHORIZED');
 }
 
@@ -79,7 +82,7 @@ export function unauthorizedResponse(
  */
 export function forbiddenResponse(
   message: string = 'Forbidden',
-): NextResponse<ApiResponse> {
+): NextResponse<ApiResponseError> {
   return errorResponse(message, 403, 'FORBIDDEN');
 }
 
@@ -88,7 +91,7 @@ export function forbiddenResponse(
  */
 export function notFoundResponse(
   message: string = 'Resource not found',
-): NextResponse<ApiResponse> {
+): NextResponse<ApiResponseError> {
   return errorResponse(message, 404, 'NOT_FOUND');
 }
 
@@ -98,7 +101,7 @@ export function notFoundResponse(
 export function serverErrorResponse(
   message: string = 'Internal server error',
   details?: unknown,
-): NextResponse<ApiResponse> {
+): NextResponse<ApiResponseError> {
   // In production, don't expose internal error details
   const isDev = process.env.NODE_ENV === 'development';
   return errorResponse(

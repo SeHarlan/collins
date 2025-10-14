@@ -10,7 +10,7 @@ import {
 import { Button, ButtonHoverWrapper } from '@/components/ui/button';
 import { ProgressBar } from './progressBar';
 import { FC } from 'react';
-import { ONBOARDING_QUESTIONS } from '@/lib/onboarding/questions';
+import { ONBOARDING_QUESTIONS } from '@/lib/api/assessments/questions';
 import { ScrollArea } from '../ui/scroll-area';
 
 interface WelcomeCardProps {
