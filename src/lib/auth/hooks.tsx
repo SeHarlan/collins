@@ -7,20 +7,22 @@ import { CLIENT_PATHWAYS } from '@/constants/clientPathways';
 import { apiClient } from '@/lib/api/utils/client';
 import { AuthUser } from './types';
 
-const emailFromAccount = (account: Object) => {
+const emailFromAccount = (account?: object) => {
   if(typeof account !== 'object') return undefined;
   if ("email" in account && !!account.email && typeof account.email === 'string') return account.email;
   return undefined;
 };
 
 const getEmailFromPrivyUser = (privyUser: PrivyInterface['user']) => {
+  if(!privyUser) return undefined;
   if(privyUser.email && typeof privyUser.email === 'string') return emailFromAccount(privyUser.email);
   const account = privyUser.linkedAccounts.find(emailFromAccount);
   return emailFromAccount(account);
 };
+
 export const useAuth = () => {
   const { authenticated, ready, user, login, logout, getAccessToken } = usePrivy();
-  const authUser: AuthUser | null = ready ? {
+  const authUser: AuthUser | null = (ready && user) ? {
     privyId: user.id,
     email: getEmailFromPrivyUser(user),
   } : null;

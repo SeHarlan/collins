@@ -8,11 +8,8 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button, ButtonHoverWrapper } from '@/components/ui/button';
-import { AnimatePresence, motion } from 'motion/react';
-import {
-  ONBOARDING_QUESTIONS,
-  OnboardingQuestion,
-} from '@/lib/api/assessments/questions';
+import { motion } from 'motion/react';
+import { ONBOARDING_QUESTIONS } from '@/lib/api/assessments/questions';
 import { useAtom } from 'jotai';
 import {
   onboardingDataAtom,

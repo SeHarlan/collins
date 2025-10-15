@@ -1,5 +1,4 @@
 import { useFundWallet } from '@privy-io/react-auth/solana';
-import { useAuth } from '@/lib/auth/hooks';
 import { Button } from '../ui/button';
 
 import { WalletIcon } from 'lucide-react';

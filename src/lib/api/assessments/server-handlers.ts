@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ApiResponse, errorResponse, serverErrorResponse, successResponse, unauthorizedResponse } from "../utils/response";
+import { ApiResponse, successResponse } from "../utils/response";
 import { AssessmentCreateRequest, AssessmentCreateResponse } from "./types";
 import { AssessmentSchema } from "@/lib/db/schemas/assessment.schema";
 import { getRequiredAuthId } from "@/lib/auth/server";
 import { AssessmentRepository } from "@/lib/db/repositories/assessment.repository";
-import { API_MESSAGES } from "@/constants/apiMessages";
 import { handleErrorResponse } from "../utils/handleErrors";
 import { UserRepository } from "@/lib/db/repositories/user.repository";
 

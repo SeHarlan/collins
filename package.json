@@ -42,6 +42,7 @@
     "motion": "^12.23.24",
     "next": "15.5.4",
     "next-themes": "^0.4.6",
+    "prettier": "^3.6.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.64.0",
@@ -52,6 +53,8 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.37.0",
     "@tanstack/eslint-plugin-query": "^5.91.0",
     "@testing-library/dom": "^10.0.0",
     "@testing-library/jest-dom": "^6.9.1",
@@ -66,12 +69,14 @@
     "eslint": "^9.37.0",
     "eslint-config-next": "15.5.4",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.4.0",
     "jsdom": "^27.0.0",
     "postcss": "^8.5.6",
-    "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^4.1.14",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.1",
     "vitest": "^3.2.4"
   },
   "engines": {

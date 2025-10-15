@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { API_ROUTES, QUERY_KEYS } from '@/constants/apiRoutes';
 import { AssessmentData } from '@/lib/db/schemas/assessment.schema';
 import { ApiResponse } from '@/lib/api/utils/response';

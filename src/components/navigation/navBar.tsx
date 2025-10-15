@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { LoginButton } from '../general/loginButton';
-import { MenuIcon, XIcon } from 'lucide-react';
 import { Button, ButtonHoverWrapper } from '../ui/button';
 import { FundWalletButton } from '../general/fundWalletButton';
 import { AnimatedMenuIcon, AnimatedXIcon } from '../icons/animated';

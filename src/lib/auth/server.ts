@@ -1,10 +1,6 @@
-import { headers } from 'next/headers';
-import { UserRepository } from '@/lib/db/repositories/user.repository';
-import { UserDocument } from '@/lib/db/models/user.model';
 import { PrivyClient } from '@privy-io/node';
 import { NextRequest } from 'next/server';
 import { API_MESSAGES } from '@/constants/apiMessages';
-import { AuthUser } from './types';
 
 
 

@@ -20,8 +20,9 @@ import { ProgressBar } from './progressBar';
 import { ArrowLeftIcon } from 'lucide-react';
 import { useCreateAssessment } from '@/lib/api/assessments/hooks';
 import { toast } from 'sonner';
-import { AssessmentSchema } from '@/lib/db/schemas/assessment.schema';
-import { useAuth, useRequireAuth } from '@/lib/auth/hooks';
+import { useAuth } from '@/lib/auth/hooks';
+
+
 
 interface CompletionCardProps {
   onPrevious: () => void;
@@ -77,7 +78,7 @@ export function CompletionCard({ onPrevious }: CompletionCardProps) {
       });
       setCompleted(true);
       router.push(CLIENT_PATHWAYS.DASHBOARD);
-    } catch (error) {
+    } catch (_error) {
       // Request error handling is managed by TanStack Query
       toast.error('Something went wrong.', {
         description: 'Please refresh the page and try again.',
@@ -99,7 +100,7 @@ export function CompletionCard({ onPrevious }: CompletionCardProps) {
           Assessment Complete!
         </CardTitle>
         <CardDescription className="text-muted-foreground text-sm md:text-lg">
-          Based on your answers, here's your ideal setup
+          Based on your answers, here&apos;s your ideal setup
         </CardDescription>
       </CardHeader>
 

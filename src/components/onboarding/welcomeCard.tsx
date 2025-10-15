@@ -11,7 +11,6 @@ import { Button, ButtonHoverWrapper } from '@/components/ui/button';
 import { ProgressBar } from './progressBar';
 import { FC } from 'react';
 import { ONBOARDING_QUESTIONS } from '@/lib/api/assessments/questions';
-import { ScrollArea } from '../ui/scroll-area';
 
 interface WelcomeCardProps {
   onStart: () => void;
@@ -31,7 +30,7 @@ export const WelcomeCard: FC<WelcomeCardProps> = ({ onStart }) => {
         <p className="text-[5rem] leading-none">🐢</p>
 
         <CardTitle className="text-2xl md:text-3xl">
-          Let's tailor your experience
+          Let&apos;s tailor your experience
         </CardTitle>
         <CardDescription className="text-muted-foreground text-sm md:text-lg">
           in under 1 minute
@@ -41,7 +40,7 @@ export const WelcomeCard: FC<WelcomeCardProps> = ({ onStart }) => {
       <CardContent className="space-y-6 py-0">
         <div className="space-y-3 text-center">
           <div className="text-lg font-medium">
-            We'll ask you {totalQuestions} quick questions about:
+            We&apos;ll ask you {totalQuestions} quick questions about:
           </div>
           <div className="text-muted-foreground grid grid-cols-2 gap-4 text-sm">
             <div>• Your experience level</div>

@@ -1,4 +1,6 @@
-{
+import { type Config } from "prettier";
+
+const config: Config = {
   "semi": true,
   "trailingComma": "all",
   "singleQuote": true,
@@ -6,3 +8,5 @@
   "tabWidth": 2,
   "plugins": ["prettier-plugin-tailwindcss"]
 }
+
+export default config;

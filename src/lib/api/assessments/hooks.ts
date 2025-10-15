@@ -1,12 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   assessmentApi,
   assessmentQueryKeys,
 } from './client-services';
 import { AssessmentData } from '@/lib/db/schemas/assessment.schema';
-import { AssessmentCreateResponse } from './types';
-import { usePrivy } from '@privy-io/react-auth';
-import { useAuth, useRequireAuth } from '@/lib/auth/hooks';
+import { useAuth } from '@/lib/auth/hooks';
 
 /** Hook to create a new assessment */
 export function useCreateAssessment() {
@@ -15,7 +13,7 @@ export function useCreateAssessment() {
 
   return useMutation({
     mutationFn: (data: Partial<AssessmentData>) => assessmentApi.create(data, authUser),
-    onSuccess: (data) => {
+    onSuccess: (_data) => {
       // Invalidate and refetch assessments queries
       queryClient.invalidateQueries({ queryKey: assessmentQueryKeys.all });
     },

@@ -1,6 +1,6 @@
 import { useAuth } from '@/lib/auth/hooks';
 import { Button } from '../ui/button';
-import { Loader2Icon, LogInIcon, LogOutIcon, WalletIcon } from 'lucide-react';
+import { Loader2Icon, LogInIcon, LogOutIcon } from 'lucide-react';
 
 interface LoginButtonProps {
   className?: string;

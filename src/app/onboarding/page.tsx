@@ -15,10 +15,8 @@ import {
   onboardingIdAtom,
 } from '@/lib/state/atoms/onboarding.atom';
 import { ONBOARDING_QUESTIONS } from '@/lib/api/assessments/questions';
-import { CLIENT_PATHWAYS } from '@/constants/clientPathways';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { AnimatePresence, motion } from 'motion/react';
+import { motion } from 'motion/react';
 
 type OnboardingStep = 'welcome' | 'questions' | 'completion';
 
@@ -135,7 +133,7 @@ interface CardWrapperProps {
   direction: number;
 }
 
-const CardWrapper: FC<CardWrapperProps> = ({ children, direction }) => { 
+const CardWrapper: FC<CardWrapperProps> = ({ children }) => { 
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95}}

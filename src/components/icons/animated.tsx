@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils/ui-utils';
-import { motion, Transition, Variants } from 'motion/react';
+import { motion, Variants } from 'motion/react';
 import { FC } from 'react';
 
 interface AnimatedIconProps {
